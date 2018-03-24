@@ -1,0 +1,27 @@
+{
+  "name": "ethuoftwebbackend",
+  "version": "1.0.0",
+  "description": "Node backend for ethUoftHacks",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johntiger1/ETHUofTWebBackend.git"
+  },
+  "keywords": [
+    "node",
+    "backend",
+    "blockchain"
+  ],
+  "author": "DataX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johntiger1/ETHUofTWebBackend/issues"
+  },
+  "homepage": "https://github.com/johntiger1/ETHUofTWebBackend#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2"
+  }
+}
