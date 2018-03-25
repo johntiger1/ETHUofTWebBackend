@@ -25,6 +25,15 @@ app.get('/', function(request,response){
     response.send("hello, im am in general, the root");
 });
 
+app.post('/', function(request, response)
+    {
+        console.log("we received a hit!");
+        console.log(request);
+    }
+
+);
+
+
 app.get('/do_yaml_parsing', function(request, response)
 
     {
