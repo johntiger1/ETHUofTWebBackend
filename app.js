@@ -109,7 +109,14 @@ app.post('/my_post_req',function(request,response){
 
 });
 
+app.post("/upload_files", function(request, response)
+{
+    console.log("There is data");
+    console.log(request);
+    response.send("it's all good");
 
+
+});
 
 app.listen(3000,
 
