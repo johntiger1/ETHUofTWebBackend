@@ -146,23 +146,11 @@ app.post("/upload_files", function(request, response)
         console.log(data.toString());
     });
 
-    // var storage = multer.diskStorage({
-    //     destination: function (req, file, cb) {
-    //         cb(null, '.\\uploads')
-    //     },
-    //     filename: function (req, file, cb) {
-    //         cb(null, Date.now() + '.pdf') //Appending .jpg
-    //     }
-    // });
-    //
-    // var upload = multer({ storage: storage });
-    //
     var obj = new Object();
     obj["response_code"] = "all good";
     response.send( JSON.stringify(obj));
 
-
-
+    
 });
 
 app.listen(3000,
