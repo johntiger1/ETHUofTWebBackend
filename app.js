@@ -10,7 +10,10 @@ var yaml = require ("js-yaml");
 var fs = require("fs");
 var querystring = require('querystring');
 var http = require("http");
-var http = require('follow-redirects').http;
+// var http = require('follow-redirects').http;
+var request = require('request');
+
+
 cors({credentials: true, origin: true});
 app.use(cors());
 
@@ -65,46 +68,26 @@ app.get('/do_yaml_parsing', function(request, response)
 app.get('/do_stuff', function(req,res)
 {
     var json = new Object();
-    json["title"] = "sample_json and in fact longer";
-
-    // var post_data = "{" +
-    //     "\"title\": \"T] up? \"" +
-    //     "}";
-
-    // An object of options to indicate where to post to
-    var post_options = {
-        host: 'api.typeform.com',
-        port: '80',
-        path: '/forms',
-        method: 'POST',
+    json["title"] = "dsjiwo";
+    request({
         headers: {
-            'Authorization': 'bearer 3zibQwxfxp1AagtpbB2conNf4nucyKhBUNTyByd4HD7C',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': "bearer 3zibQwxfxp1AagtpbB2conNf4nucyKhBUNTyByd4HD7C"
         },
-        json: true,
-        body: json
-
-    };
-
-    // Set up the request
-    var post_req = http.request(post_options, function(res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log('Response: ' + chunk);
-        });
+        followAllRedirects: true,
+        uri: 'http://api.typeform.com/forms',
+        json: json,
+        method: 'POST'
+    }, function (err, result, body) {
+        //it works!
+        console.log(result);
+        res.send(result);
     });
-
-    // post the data
-    // post_req.write(post_data);
-
-    //send the response
-    post_req.end();
-
-    res.send("im done");
-
 
 
 });
+
+
 
 app.post('/my_post_req',function(request,response){
     var query1=request.body.abc;
