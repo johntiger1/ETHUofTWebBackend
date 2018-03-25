@@ -129,8 +129,11 @@ app.post("/upload_files", function(request, response)
 
     var upload = multer({ storage: storage });
 
+    var obj = new Object();
+    obj["response_code"] = "all good";
+    response.send( JSON.stringify(obj));
 
-    response.send("it's all good");
+
 });
 
 app.listen(3000,
