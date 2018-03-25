@@ -5,6 +5,11 @@ var app            =        express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var cors = require('cors');
+
+cors({credentials: true, origin: true});
+app.use(cors());
+
 app.get('/handle',function(request,response){
     response.send("hello, im am in handle");
 });
@@ -19,6 +24,9 @@ app.post('/my_post_req',function(request,response){
     console.log(query1); //OK, so it has to be x-www-form-urlencoded data only, or application/json
     console.log(query2);
     response.send("ok you did send me somehting");
+
+//    OK, now we just need to get the stuff from the front end..
+
 });
 
 
