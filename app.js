@@ -1,6 +1,14 @@
 var express        =        require("express");
 var bodyParser     =        require("body-parser");
 var app            =        express();
+var fs             =        require('fs');
+var crypto         =        require('crypto')
+var admin          =        require('firebase-admin')
+var Web3           =        require('web3');
+var contract       =        require("truffle-contract");
+var path           =        require('path');
+var MyContractJSON =        require(path.join(__dirname, './EthHacks/build/contracts/DataX.json'));
+
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -116,7 +124,7 @@ app.post("/upload_files", function(request, response)
     var x = request.file;
     request.on('data', (data) => {
         console.log(data.toString());
-});
+    });
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -132,6 +140,7 @@ app.post("/upload_files", function(request, response)
     var obj = new Object();
     obj["response_code"] = "all good";
     response.send( JSON.stringify(obj));
+
 
 
 });
