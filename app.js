@@ -1,6 +1,14 @@
 var express        =        require("express");
 var bodyParser     =        require("body-parser");
 var app            =        express();
+var fs             =        require('fs');
+var crypto         =        require('crypto')
+var admin          =        require('firebase-admin')
+var Web3           =        require('web3');
+var contract       =        require("truffle-contract");
+var path           =        require('path');
+var MyContractJSON =        require(path.join(__dirname, './EthHacks/build/contracts/DataX.json'));
+
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -12,10 +20,16 @@ var querystring = require('querystring');
 var http = require("http");
 // var http = require('follow-redirects').http;
 var request = require('request');
+var serviceAccount = require('./EthUofT-c434a8b7b0f7.json');
 
 var multer = require('multer');
 cors({credentials: true, origin: true});
 app.use(cors());
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://ethuoft-41976.firebaseio.com/'
+});
 
 app.get('/handle',function(request,response){
     response.send("hello, im am in handle");
@@ -127,9 +141,23 @@ app.post('/upload_multer', multer({ dest: './uploads/'}).single('files[]'), func
               size: 277056 }
      */
 
+
+    var file = req.file.destination + req.file.filename;
+    console.log(file);
+    var shasum = crypto.createHash('sha256');
+    var s = fs.ReadStream(file);
+    s.on('data', function(d) { shasum.update(d); });
+    s.on('end', function() {
+        var d = shasum.digest('hex');
+        console.log(d);
+        var db = admin.database();
+        var ref = db.ref('data');
+        
+    });
+
     res.json({"filename": req.file.filename, "type": req.file.mimetype});
     res.status(204).end();
-});
+ });
 
 app.post("/upload_files", function(request, response)
 {
@@ -138,23 +166,22 @@ app.post("/upload_files", function(request, response)
     var x = request.file;
     request.on('data', (data) => {
         console.log(data.toString());
-});
+    });
 
-    // var storage = multer.diskStorage({
-    //     destination: function (req, file, cb) {
-    //         cb(null, '.\\uploads')
-    //     },
-    //     filename: function (req, file, cb) {
-    //         cb(null, Date.now() + '.pdf') //Appending .jpg
-    //     }
-    // });
-    //
-    // var upload = multer({ storage: storage });
-    //
     var obj = new Object();
     obj["response_code"] = "all good";
     response.send( JSON.stringify(obj));
 
+    var file = x.destination + filename;
+    console.log(file);
+
+    var s = fs.ReadStream(file);
+    s.on('data', function(d) { shasum.update(d); });
+    s.on('end', function() {
+        var d = shasum.digest('hex');
+        console.log(d);
+    });
+    
 
 });
 
