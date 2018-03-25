@@ -112,7 +112,11 @@ app.post('/my_post_req',function(request,response){
 app.post("/upload_files", function(request, response)
 {
     console.log("There is data");
-    console.log(request);
+    // console.log(request);
+    var x = request.file;
+    request.on('data', (data) => {
+        console.log(data.toString());
+});
     response.send("it's all good");
 
 
