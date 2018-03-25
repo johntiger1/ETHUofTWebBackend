@@ -110,7 +110,7 @@ app.post('/my_post_req',function(request,response){
 });
 
 
-app.post('/upload_multer', multer({ dest: './uploads/'}).single('upl'), function(req,res){
+app.post('/upload_multer', multer({ dest: './uploads/'}).single('files[]'), function(req,res){
     console.log(req.body); //form fields
     /* example output:
     { title: 'abc' }
@@ -126,6 +126,8 @@ app.post('/upload_multer', multer({ dest: './uploads/'}).single('upl'), function
               path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
               size: 277056 }
      */
+
+    res.json({"filename": req.file.filename, "type": req.file.mimetype});
     res.status(204).end();
 });
 
