@@ -13,7 +13,7 @@ var http = require("http");
 // var http = require('follow-redirects').http;
 var request = require('request');
 
-
+var multer = require('multer');
 cors({credentials: true, origin: true});
 app.use(cors());
 
@@ -117,9 +117,20 @@ app.post("/upload_files", function(request, response)
     request.on('data', (data) => {
         console.log(data.toString());
 });
+
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, '.\\uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, Date.now() + '.pdf') //Appending .jpg
+        }
+    });
+
+    var upload = multer({ storage: storage });
+
+
     response.send("it's all good");
-
-
 });
 
 app.listen(3000,
