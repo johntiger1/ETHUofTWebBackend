@@ -13,6 +13,14 @@ app.get('/', function(request,response){
     response.send("hello, im am in general, the root");
 });
 
+app.post('/my_post_req',function(request,response){
+    var query1=request.body.abc;
+    var query2=request.body["123"];
+    console.log(query1); //OK, so it has to be x-www-form-urlencoded data only, or application/json
+    console.log(query2);
+    response.send("ok you did send me somehting");
+});
+
 
 
 app.listen(3000,
