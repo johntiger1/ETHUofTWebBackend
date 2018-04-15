@@ -13,6 +13,7 @@ var MyContractJSON =        require(path.join(__dirname, './EthHacks/build/contr
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
 var cors = require('cors');
 var yaml = require ("js-yaml");
 var fs = require("fs");
@@ -26,6 +27,9 @@ var multer = require('multer');
 cors({credentials: true, origin: true});
 app.use(cors());
 
+//ETHUofTFrontend\test_site1
+app.use(express.static('./ETHUofTFrontend/test_site1'));
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: 'https://ethuoft-41976.firebaseio.com/'
@@ -34,6 +38,8 @@ admin.initializeApp({
 app.get('/handle',function(request,response){
     response.send("hello, im am in handle");
 });
+
+
 
 app.get('/', function(request,response){
     response.send("hello, im am in general, the root");
@@ -185,6 +191,6 @@ app.post("/upload_files", function(request, response)
 
 });
 
-app.listen(3000,
+app.listen(process.env.PORT || 3000,
 
     () => console.log("listening via express"));
